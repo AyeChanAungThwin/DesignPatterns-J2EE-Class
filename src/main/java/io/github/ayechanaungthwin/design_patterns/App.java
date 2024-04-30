@@ -1,7 +1,16 @@
 package io.github.ayechanaungthwin.design_patterns;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
+import io.github.ayechanaungthwin.design_patterns.behavioral.cor.CannotBuyHandler;
+import io.github.ayechanaungthwin.design_patterns.behavioral.cor.Handler;
+import io.github.ayechanaungthwin.design_patterns.behavioral.cor.RedBullHandler;
+import io.github.ayechanaungthwin.design_patterns.behavioral.cor.WaterHandler;
+import io.github.ayechanaungthwin.design_patterns.behavioral.cor.WineHandler;
+import io.github.ayechanaungthwin.design_patterns.behavioral.observer.Client;
+import io.github.ayechanaungthwin.design_patterns.behavioral.observer.Server;
 import io.github.ayechanaungthwin.design_patterns.creational.builder.Person;
 import io.github.ayechanaungthwin.design_patterns.creational.factory.Connection;
 import io.github.ayechanaungthwin.design_patterns.creational.factory.Connector;
@@ -14,6 +23,13 @@ import io.github.ayechanaungthwin.design_patterns.structural.composite.Circle;
 import io.github.ayechanaungthwin.design_patterns.structural.composite.Graphics;
 import io.github.ayechanaungthwin.design_patterns.structural.composite.Line;
 import io.github.ayechanaungthwin.design_patterns.structural.composite.Point;
+import io.github.ayechanaungthwin.design_patterns.structural.decorator.BasicLogger;
+import io.github.ayechanaungthwin.design_patterns.structural.decorator.DateTimeLogger;
+import io.github.ayechanaungthwin.design_patterns.structural.decorator.HtmlLogger;
+import io.github.ayechanaungthwin.design_patterns.structural.decorator.Logger;
+import io.github.ayechanaungthwin.design_patterns.structural.facade.Circle1;
+import io.github.ayechanaungthwin.design_patterns.structural.facade.FacadeDp;
+import io.github.ayechanaungthwin.design_patterns.structural.facade.Rectangle;
 import io.github.ayechanaungthwin.design_patterns.structural.flyweight.Player;
 import io.github.ayechanaungthwin.design_patterns.structural.flyweight.PlayerFactory;
 import io.github.ayechanaungthwin.design_patterns.structural.flyweight.PlayerType;
@@ -31,7 +47,19 @@ public class App {
     	//Adapter();
     	//Composite();
     	//Proxy();
-    	FlyWeight();
+    	//FlyWeight();
+    	//COR();
+    	//Facade();
+    	//Decorator();
+    	//Observer();
+    	//https://www.tutorialspoint.com/design_pattern/strategy_pattern.htm
+    	Stack<Integer> stack = new Stack<>();
+    	stack.add(1);
+    	stack.add(2);
+    	stack.add(3);
+    	
+    	System.out.println(stack.peek());
+    	System.out.println(stack.peek());
     }
     
     public static void Singleton() {
@@ -152,5 +180,46 @@ public class App {
     	for(Player out: players) {
     		out.mission();
     	}
+    }
+    
+    public static void COR() {
+    	//if-else if-else
+    	Handler hdl1 = new WineHandler();
+    	Handler hdl2 = new RedBullHandler();
+    	Handler hdl3 = new WaterHandler();
+    	Handler hdl4 = new CannotBuyHandler();
+    	
+    	hdl1.setSuccessor(hdl2);
+    	hdl2.setSuccessor(hdl3);
+    	hdl3.setSuccessor(hdl4);
+    	
+    	int money = 200;
+    	hdl1.handleRequest(money);
+    }
+    
+    public static void Facade() {
+    	//Program to interface, not implementation
+    	FacadeDp facade = new FacadeDp(new Circle1(), new Rectangle());
+    	facade.draw();
+    }
+    
+    public static void Decorator() {
+    	Logger basicLogger = new BasicLogger();
+    	System.out.println(basicLogger.log());
+    	
+    	Logger dateTimeLogger = new DateTimeLogger(basicLogger);
+    	System.out.println(dateTimeLogger.log());
+    	
+    	Logger htmlLogger = new HtmlLogger(dateTimeLogger);
+    	System.out.println(htmlLogger.log());
+    }
+    
+    public static void Observer() {
+    	Client client = new Client();
+    	client.uploadImage();
+    	
+    	Server server = new Server();
+    	server.attach(client);
+    	server.setMessage("Image is uploaded successfully.");
     }
 }

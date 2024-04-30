@@ -1,7 +1,6 @@
 package io.github.ayechanaungthwin.design_patterns.structural.composite;
 
 import lombok.Getter;
-import lombok.Setter;
 
 public class Circle extends Point {
 

@@ -7,8 +7,8 @@ public class PlayerFactory {
 	private static HashMap<PlayerType, Player> hm = new HashMap<>();
 	
 	public static Player getPlayer(PlayerType playerType) {
-		
 		Player player = null;
+		
 		if (hm.containsKey(playerType)) {
 			player = hm.get(playerType);
 		}
